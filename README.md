@@ -41,6 +41,26 @@ Discover Whisper-TikTok, an innovative AI-powered tool that leverages the prowes
 
 <https://github.com/MatteoFasulo/Whisper-TikTok/assets/74818541/68e25504-c305-4144-bd39-c9acc218c3a4>
 
+# Welcome to the Whisper-TikTok Repository
+
+This repository houses an innovative Streamlit application that expertly utilizes the OpenAI Whisper model, Microsoft Edge's read aloud feature, and FFmpeg to craft creative and captivating TikTok videos with seamless voiceovers and video processing capabilities.
+
+## Streamlit App
+
+![Streamlit App Screenshot](/assets/streamlit-app-screenshot.png)
+
+To use and explore the Streamlit app, please refer to the "How to Start the App" section below for detailed instructions on getting the app up and running.
+
+## How to Start the App
+
+To start the Streamlit application, navigate to the root directory of this repository and execute the script located in `src/main.py` with the following command:
+
+```bash
+streamlit run src/main.py
+```
+
+Feel free to access the application's interface and enjoy the functionalities it offers.
+
 ## Operating Principle
 
 Employing Whisper-TikTok is a breeze: simply modify the [video.json](video.json). The JSON file contains the following fields:
@@ -104,6 +124,14 @@ scoop install ffmpeg
 ```
 
 Please note that for optimal performance, it's advisable to have a GPU when using the OpenAI Whisper model for speech recognition. However, the program will work without a GPU, but it will run more slowly. This performance difference is because GPUs efficiently handle fp16 computation, while CPUs use fp32 or fp64 (depending on your machine), which are slower.
+
+## Repository Contents
+
+The repository includes:
+- Python scripts for generating images (`image_generator.py`), creating videos (`video_creator.py`), and generating voice (`voice_generator.py`).
+- Guides for the installation of FFmpeg and CUDA: [FFmpeg Installation Guide](docs/1-ffmpeg.md), [CUDA Installation Guide](docs/2-cuda.md).
+
+These components enable the creation and manipulation of content for TikTok videos using a blend of AI models and multimedia processing techniques.
 
 ## Usage Guidelines 📝
 
