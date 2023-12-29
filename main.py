@@ -30,6 +30,8 @@ from dotenv import load_dotenv, find_dotenv
 
 # OpenAI Whisper Model PyTorch
 import whisper
+from image_generator import generate_images
+from voice_creator import create_voice
 
 from src.image_generator import generate_image
 from src.voice_generator import generate_voice
