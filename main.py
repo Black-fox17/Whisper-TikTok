@@ -1,3 +1,10 @@
+from src.args_parser import parse_args
+from src.video_downloader import download_video as download_video_async
+from src.tts_converter import convert_to_tts
+from src.subtitle_creator import create_srt
+from src.video_preparer import prepare_video_background
+from src.tiktok_uploader import tiktok_upload
+
 import platform
 import os
 from pathlib import Path
@@ -163,7 +170,7 @@ async def main() -> bool:
                 f"{msg.WARNING}PyTorch GPU not found, using CPU instead")
             logger.warning('PyTorch GPU not found')
 
-        download_video(url=args.url)
+        await download_video(url=args.url)
 
         # OpenAI-Whisper Model
         model = args.model
@@ -194,7 +201,7 @@ async def main() -> bool:
             console.log(f"{msg.OK}Text converted successfully")
             logger.info('Text converted successfully')
 
-            await tts(req_text, outfile=filename, voice=args.tts, args=args)
+            await convert_to_tts(req_text, outfile=filename, voice=args.tts, args=args)
 
             console.log(
                 f"{msg.OK}Text2Speech mp3 file generated successfully with voice {args.tts}")
@@ -202,7 +209,7 @@ async def main() -> bool:
                 f'Text2Speech mp3 file generated successfully with voice {args.tts}')
 
             # Whisper Model to create SRT file from Speech recording
-            srt_filename = srt_create(
+            srt_filename = create_srt(
                 whisper_model, path, series, part, text, filename)
             srt_filename = Path(srt_filename).absolute()
 
@@ -220,7 +227,7 @@ async def main() -> bool:
             file_info = get_info(background_mp4, verbose=args.verbose)
 
             filename = Path(filename).absolute()
-            final_video = prepare_background(
+            final_video = prepare_video_background(
                 background_mp4, filename_mp3=filename, filename_srt=srt_filename, duration=int(file_info.get('duration')), verbose=args.verbose)
             final_video = Path(final_video).absolute()
 
@@ -234,7 +241,7 @@ async def main() -> bool:
             logger.info('Uploading to TikTok...')
 
 
-            uploaded = upload_tiktok(
+            uploaded = tiktok_upload(
                 str(final_video), title=f"{series} - {part}", tags=tags, headless=not args.verbose)
 
             if uploaded:
