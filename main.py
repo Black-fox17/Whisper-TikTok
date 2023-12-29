@@ -29,6 +29,8 @@ from dotenv import load_dotenv, find_dotenv
 # OpenAI Whisper Model PyTorch
 import whisper
 
+from src.image_generator import generate_image
+from src.voice_generator import generate_voice
 # MicrosoftEdge TTS
 import edge_tts
 
@@ -202,6 +204,29 @@ async def main() -> bool:
             logger.info('Text converted successfully')
 
             await convert_to_tts(req_text, outfile=filename, voice=args.tts, args=args)
+
+            # Generate image from the prompt
+            image_result = generate_image(
+                prompt=video['image_prompt'],
+                negative_prompt=video.get('negative_prompt', ''),
+                samples=video.get('samples', 1),
+                guidance_scale=video.get('guidance_scale', 7.5),
+                height=video.get('height', 1024),
+                width=video.get('width', 1024),
+                num_inference_steps=video.get('num_inference_steps', 50),
+                key=os.getenv('IMAGE_API_KEY')
+            )
+            # Save the image result to a file or process further
+            # TODO: Implement saving or further processing
+
+            # Generate voice from the prompt
+            voice_result = generate_voice(
+                prompt=video['voice_prompt'],
+                voice_id=video.get('voice_id', 'default_voice'),
+                key=os.getenv('VOICE_API_KEY')
+            )
+            # Save the voice result to a file or process further
+            # TODO: Implement saving or further processing
 
             console.log(
                 f"{msg.OK}Text2Speech mp3 file generated successfully with voice {args.tts}")
