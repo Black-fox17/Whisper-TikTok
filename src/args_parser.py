@@ -1,8 +1,8 @@
 import argparse
-from sys import sys
+import sys
 
 import edge_tts
-from msg import msg
+import msg
 from utils import console
 
 
