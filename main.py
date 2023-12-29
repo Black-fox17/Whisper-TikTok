@@ -6,7 +6,7 @@ OpenAI Whisper model.
 
 from src.args_parser import parse_args
 from src.video_downloader import download_video as download_video_async
-from src.tts_converter import convert_to_tts
+from src.tts_converter import tts
 from src.subtitle_creator import create_srt
 from src.video_preparer import prepare_video_background
 from src.tiktok_uploader import tiktok_upload
