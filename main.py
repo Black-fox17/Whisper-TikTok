@@ -1,3 +1,9 @@
+"""
+This file contains the main functions for the Whisper-TikTok project. It includes functions for generating images,
+creating voice from text, and other utility functions for video creation using FFMPEG, Microsoft Edge read aloud, and
+OpenAI Whisper model.
+"""
+
 from src.args_parser import parse_args
 from src.video_downloader import download_video as download_video_async
 from src.tts_converter import convert_to_tts
@@ -305,6 +311,21 @@ async def main() -> bool:
 
 
 def generate_images(prompt, negative_prompt, samples, guidance_scale, height, width, num_inference_steps):
+    """
+    Generates images from a given prompt, negative prompt, samples, guidance scale, height, width, and number of inference steps.
+
+    Args:
+        prompt (str): The prompt for the image generation.
+        negative_prompt (str): The negative prompt for the image generation.
+        samples (int): The number of samples for the image generation.
+        guidance_scale (float): The guidance scale for the image generation.
+        height (int): The height of the generated image.
+        width (int): The width of the generated image.
+        num_inference_steps (int): The number of inference steps for the image generation.
+
+    Returns:
+        dict: A dictionary containing the response from the image generation API.
+    """
     url = 'https://modelslab.com/api/v6/realtime/text2img'
     payload = {
         'prompt': prompt,
@@ -315,6 +336,37 @@ def generate_images(prompt, negative_prompt, samples, guidance_scale, height, wi
         'width': width,
         'num_inference_steps': num_inference_steps
     }
+def create_voice(prompt, voice_id):
+    """
+    Generates voice audio from a given prompt and selected voice_id.
+
+    Args:
+        prompt (str): The text prompt to generate the speech from.
+        voice_id (str): The identifier for the chosen voice model.
+
+    Returns:
+        dict: A dictionary containing the response from the voice generation API.
+
+    Raises:
+        RequestException: An error thrown by the requests library for network-related issues.
+    """
+    # Assuming the presence of a function that sends prompt and voice_id to an API
+    # The example below is a placeholder and may not reflect the actual implementation
+    api_url = 'https://voiceapi.example.com/generate'  # example API URL
+    payload = {
+        'prompt': prompt,
+        'voice_id': voice_id
+    }
+    response = requests.post(api_url, json=payload)
+
+    # Handle potential network errors
+    try:
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+
+    return response.json()
+
     response = requests.post(url, json=payload)
     while response.json().get('status') == 'wait':
         response = requests.post(url, json=payload)
