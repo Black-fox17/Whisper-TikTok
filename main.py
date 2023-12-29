@@ -1,3 +1,9 @@
+"""
+This file contains the main functions for the Whisper-TikTok project. It includes functions for generating images,
+creating voice from text, and other utility functions for video creation using FFMPEG, Microsoft Edge read aloud, and
+OpenAI Whisper model.
+"""
+
 from src.args_parser import parse_args
 from src.video_downloader import download_video as download_video_async
 from src.tts_converter import convert_to_tts
