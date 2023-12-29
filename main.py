@@ -334,6 +334,37 @@ def generate_images(prompt, negative_prompt, samples, guidance_scale, height, wi
         'width': width,
         'num_inference_steps': num_inference_steps
     }
+def create_voice(prompt, voice_id):
+    """
+    Generates voice audio from a given prompt and selected voice_id.
+
+    Args:
+        prompt (str): The text prompt to generate the speech from.
+        voice_id (str): The identifier for the chosen voice model.
+
+    Returns:
+        dict: A dictionary containing the response from the voice generation API.
+
+    Raises:
+        RequestException: An error thrown by the requests library for network-related issues.
+    """
+    # Assuming the presence of a function that sends prompt and voice_id to an API
+    # The example below is a placeholder and may not reflect the actual implementation
+    api_url = 'https://voiceapi.example.com/generate'  # example API URL
+    payload = {
+        'prompt': prompt,
+        'voice_id': voice_id
+    }
+    response = requests.post(api_url, json=payload)
+
+    # Handle potential network errors
+    try:
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+
+    return response.json()
+
     response = requests.post(url, json=payload)
     while response.json().get('status') == 'wait':
         response = requests.post(url, json=payload)
