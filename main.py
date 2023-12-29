@@ -6,6 +6,8 @@ from src.video_preparer import prepare_video_background
 from src.tiktok_uploader import tiktok_upload
 
 import platform
+import requests
+import json
 import os
 from pathlib import Path
 import random
@@ -174,6 +176,25 @@ async def main() -> bool:
 
         await download_video(url=args.url)
 
+        # Generate images using the generate_images function
+        images_response = generate_images(
+            prompt='Sample prompt for image generation',
+            negative_prompt='low quality',
+            samples=4,
+            guidance_scale=7.5,
+            height=1920,
+            width=1080,
+            num_inference_steps=50
+        )
+        # Handle images response...
+        
+        # Create voice using the create_voice function
+        voice_response = create_voice(
+            prompt='Sample prompt for voice generation',
+            voice_id='voice_example_id'
+        )
+        # Handle voice response...
+
         # OpenAI-Whisper Model
         model = args.model
         if args.model != "large" and not args.non_english:
@@ -281,7 +302,21 @@ async def main() -> bool:
     return True
 
 
-def download_video(url: str, folder: str = 'background'):
+def generate_images(prompt, negative_prompt, samples, guidance_scale, height, width, num_inference_steps):
+    url = 'https://modelslab.com/api/v6/realtime/text2img'
+    payload = {
+        'prompt': prompt,
+        'negative_prompt': negative_prompt,
+        'samples': samples,
+        'guidance_scale': guidance_scale,
+        'height': height,
+        'width': width,
+        'num_inference_steps': num_inference_steps
+    }
+    response = requests.post(url, json=payload)
+    while response.json().get('status') == 'wait':
+        response = requests.post(url, json=payload)
+    return response.json()
     """
     Downloads a video from the given URL and saves it to the specified folder.
 

@@ -1,4 +1,39 @@
-# Introducing Whisper-TikTok 🤖🎥
+## New Functionalities 🆕
+
+### `generate_images` Function
+
+The `generate_images` function allows you to generate images based on a text prompt. It makes a request to an external API that returns a set of images that match the prompt.
+
+**Example of usage**:
+
+```python
+response = generate_images(
+    prompt='A serene beach at sunset',
+    negative_prompt='low quality',
+    samples=4,
+    guidance_scale=7.5,
+    height=1080,
+    width=1920,
+    num_inference_steps=50
+)
+print(response)
+```
+
+### `create_voice` Function
+
+The `create_voice` function allows you to convert text to voice. It calls an external API that processes the text and returns an audio file in the desired voice.
+
+**Example of usage**:
+
+```python
+response = create_voice(
+    prompt='Welcome to Whisper-TikTok tutorial',
+    voice_id='jack_sparrow'
+)
+print(response)
+```
+
+Remember to handle the responses from these functions appropriately. This may include checking for any 'wait' status and resending requests or processing the received images and audio files.# Introducing Whisper-TikTok 🤖🎥
 
 Discover Whisper-TikTok, an innovative AI-powered tool that leverages the prowess of **Edge TTS**, **OpenAI-Whisper**, and **FFMPEG** to craft captivating TikTok videos. Harnessing the capabilities of OpenAI's Whisper model, Whisper-TikTok effortlessly generates an accurate **transcription** from provided audio files, laying the foundation for the creation of mesmerizing TikTok videos through the utilization of **FFMPEG**. Additionally, the program seamlessly integrates the **Microsoft Edge Cloud Text-to-Speech (TTS) API** to lend a vibrant **voiceover** to the video. Opting for Microsoft Edge Cloud TTS API's voiceover is a deliberate choice, as it delivers a remarkably **natural and authentic** auditory experience, setting it apart from the often monotonous and artificial voiceovers prevalent in numerous TikTok videos.
 
@@ -72,7 +107,14 @@ Please note that for optimal performance, it's advisable to have a GPU when usin
 
 ## Usage Guidelines 📝
 
-To embark on your Whisper-TikTok journey, initiate the following command within your terminal:
+To use the new `generate_images` and `create_voice` functionalities, please follow these guidelines:
+
+- **generate_images**: Use this function to generate images from a textual prompt. Provide parameters such as the prompt, negative prompts to avoid, number of samples to generate, guidance scale, and the dimensions and resolution of the images.
+- **create_voice**: This function converts your text into a spoken voiceover. You'll need to supply the text and choose a voice ID from the available options.
+
+After calling these functions, make sure to handle their responses correctly, including any 'wait' status from the `generate_images` function, and processing the returned images and voice files appropriately.
+
+To get started with the main functionality of Whisper-TikTok, run the following command in your terminal:
 
 ```bash
 python main.py
