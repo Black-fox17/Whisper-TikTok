@@ -1,6 +1,6 @@
-from src import streamlit_app
-from src.image_generator import generate_image
-from src.video_creator import create_video
+from . import streamlit_app
+from .image_generator import generate_image
+from .video_creator import create_video
 from src.voice_generator import generate_voice
 
 
