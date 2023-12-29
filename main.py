@@ -92,6 +92,12 @@ jsonData = json.loads(video_json_path.read_text(encoding='utf-8'))
 
 
 async def main() -> bool:
+    """
+    The main function that orchestrates the entire process of video creation. It parses the arguments, downloads the video,
+    generates images and voice, loads the Whisper model, prepares the video background, and uploads the final video to TikTok.
+
+    :return: True if the process completes successfully, False otherwise.
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", default="small", help="Model to use",
                         choices=["tiny", "base", "small", "medium", "large"], type=str)
@@ -392,7 +398,12 @@ def create_voice(prompt, voice_id):
     return
 
 
-def random_background(folder: str = "background") -> str:
+def download_video(url: str, folder: str = 'background') -> None:
+    """
+    Downloads a video from the given URL and saves it to the specified folder.
+
+    :param url: The URL of the video to download.
+    :param folder: The name of the folder to save the video in. Defaults to 'background'.
     """
     Returns the filename of a random file in the specified folder.
 
@@ -414,6 +425,12 @@ def random_background(folder: str = "background") -> str:
 
 
 def get_info(filename: str, verbose: bool = False):
+    """
+    Get information about a video file.
+
+    :param filename: The path to the video file.
+    :param verbose: Whether to print verbose output. Defaults to False.
+    :return: A dictionary containing information about the video file, including width, height, bit rate, and duration.
     """
     Get information about a video file.
 
@@ -458,6 +475,15 @@ def get_info(filename: str, verbose: bool = False):
 
 
 def prepare_background(background_mp4: str, filename_mp3: str, filename_srt: str, duration: int, verbose: bool = False) -> str:
+    """
+    Prepare a background video with an audio file and a subtitle file.
+
+    :param background_mp4: The path to the background video file.
+    :param filename_mp3: The path to the audio file to be merged with the background video.
+    :param filename_srt: The path to the subtitle file to be added to the background video.
+    :param duration: The duration of the output video in seconds.
+    :param verbose: Whether to print verbose output. Defaults to False.
+    :return: The path to the output video file.
     """
     Prepare a background video with an audio file and a subtitle file.
 
@@ -524,6 +550,16 @@ def prepare_background(background_mp4: str, filename_mp3: str, filename_srt: str
 
 
 def srt_create(model, path: str, series: str, part: int, text: str, filename: str) -> bool:
+    """
+    Create an SRT file for a given video file using the specified model.
+
+    :param model: The model to use for transcription.
+    :param path: The path to the directory where the SRT file should be saved.
+    :param series: The name of the series the video belongs to.
+    :param part: The part number of the video.
+    :param text: The text to transcribe.
+    :param filename: The name of the video file.
+    :return: True if the SRT file was created successfully, False otherwise.
     """
     Create an SRT file for a given video file using the specified model.
 
@@ -639,6 +675,15 @@ def create_full_text(path: str = '', series: str = '', part: int = 1, text: str 
     """
     Creates full text and filename for a given series, part, text and outro.
 
+    :param path: The path where the file will be saved.
+    :param series: The name of the series.
+    :param part: The part number of the series.
+    :param text: The main text of the series.
+    :param outro: The outro of the series.
+    :return: A tuple containing the full text and filename.
+    """
+    Creates full text and filename for a given series, part, text and outro.
+
     Args:
         path (str): The path where the file will be saved.
         series (str): The name of the series.
@@ -680,6 +725,15 @@ async def tts(final_text: str, voice: str = "en-US-ChristopherNeural", stdout: b
 
 
 def upload_tiktok(file, title: str, tags: list, headless: bool = False):
+    """
+    Uploads a video file to TikTok.
+
+    :param file: The video file to upload.
+    :param title: The title of the video.
+    :param tags: A list of tags for the video.
+    :param headless: Whether to run the browser in headless mode. Defaults to False.
+    :return: True if the upload was successful, False otherwise.
+    """
     if not os.path.isfile('cookies.txt'):
         console.log(f"{msg.ERROR}Cookie file not found. Please check the following link for instructions on how to get your TikTok cookie: https://github.com/kairi003/Get-cookies.txt-LOCALLY")
         logger.error('Cookie file not found')
