@@ -1,7 +1,7 @@
 import streamlit as st
-from src.image_generator import generate_image
-from src.video_creator import create_video
-from src.voice_generator import generate_voice
+from .image_generator import generate_image
+from .video_creator import create_video
+from .voice_generator import generate_voice
 
 st.title('Whisper-TikTok Configuration')
 
