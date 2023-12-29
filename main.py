@@ -309,6 +309,21 @@ async def main() -> bool:
 
 
 def generate_images(prompt, negative_prompt, samples, guidance_scale, height, width, num_inference_steps):
+    """
+    Generates images from a given prompt, negative prompt, samples, guidance scale, height, width, and number of inference steps.
+
+    Args:
+        prompt (str): The prompt for the image generation.
+        negative_prompt (str): The negative prompt for the image generation.
+        samples (int): The number of samples for the image generation.
+        guidance_scale (float): The guidance scale for the image generation.
+        height (int): The height of the generated image.
+        width (int): The width of the generated image.
+        num_inference_steps (int): The number of inference steps for the image generation.
+
+    Returns:
+        dict: A dictionary containing the response from the image generation API.
+    """
     url = 'https://modelslab.com/api/v6/realtime/text2img'
     payload = {
         'prompt': prompt,
